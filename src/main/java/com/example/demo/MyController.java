@@ -69,8 +69,9 @@ public class MyController {
 		return iService.findPaginated(pageNo, pageSize);
 	}
 	@GetMapping("/sorting")
-	public Iterable<Students> getAllByCols(@RequestParam String field){
-		return sRepository.findAll(Sort.by(Direction.ASC,field));
+	public Iterable<Students> getAllByCols(@RequestParam String field, @RequestParam String direction){
+		Direction sortDirection=direction.equalsIgnoreCase("desc")?Direction.DESC:Direction.ASC;
+		return sRepository.findAll(Sort.by(sortDirection,field));
 	}
 	@GetMapping("/page/{pageNo}/{pageSize}/sort")
 	public List<Students> getPaginatedandSorted(@PathVariable int pageNo, @PathVariable int pageSize, @RequestBody String field, @RequestBody String direction){
